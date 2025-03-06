@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Task {
-    private int id;
+    private int user_id;
+    private String task_id;
     private String title;
     private boolean done;
 }

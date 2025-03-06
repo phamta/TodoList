@@ -23,13 +23,13 @@ public class TaskController {
         taskService.addTask(newTask);
     }
 
-    @PutMapping("/update/{id}")
-    public boolean updateTask(@PathVariable int id, @RequestBody Task updatedTask) {
-        return taskService.updateTask(id, updatedTask);
+    @PutMapping("{user_id}/update/{id}")
+    public boolean updateTask(@PathVariable int user_id, @PathVariable String id, @RequestBody Task updatedTask) {
+        return taskService.updateTask(user_id,id, updatedTask);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public boolean deleteTask(@PathVariable int id) {
-        return taskService.deleteTask(id);
+    @DeleteMapping("{user_id}/delete/{id}")
+    public boolean deleteTask(@PathVariable int user_id, @PathVariable String id) {
+        return taskService.deleteTask(user_id,id);
     }
 }

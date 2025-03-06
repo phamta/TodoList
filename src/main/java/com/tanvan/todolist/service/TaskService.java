@@ -10,17 +10,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
-    private List<Task> taskList = new ArrayList<Task>();
+    private List<Task> taskList = new ArrayList<>();
+
     public TaskService() {
-        taskList.add(new Task(1, "Hoc Spring Boot", false));
-        taskList.add(new Task(1, "Hoc Django", false));
-        taskList.add(new Task(1, "Hoc su dung git", true));
-        taskList.add(new Task(3, "Spring MVC", true));
+        taskList.add(new Task(1, "1_1", "Hoc Spring Boot", false));
+        taskList.add(new Task(1, "1_2", "Hoc Django", false));
+        taskList.add(new Task(1, "1_3", "Hoc su dung git", true));
+        taskList.add(new Task(3, "3_1", "Spring MVC", true));
     }
 
-    public List<Task> getTaskListByID(int id) {
+    // Lấy danh sách task theo user_id
+    public List<Task> getTaskListByID(int user_id) {
         return taskList.stream()
-                .filter(task -> task.getId() == id)
+                .filter(task -> task.getUser_id() == user_id)  // Fix biến id -> user_id
                 .collect(Collectors.toList());
     }
 
@@ -29,10 +31,10 @@ public class TaskService {
         taskList.add(newTask);
     }
 
-    // Cập nhật task theo ID
-    public boolean updateTask(int id, Task updatedTask) {
+    // Cập nhật task theo user_id và task_id
+    public boolean updateTask(int user_id, String task_id, Task updatedTask) {
         Optional<Task> existingTask = taskList.stream()
-                .filter(task -> task.getId() == id)
+                .filter(task -> task.getUser_id() == user_id && task.getTask_id().equals(task_id))  // Fix: Lọc cả user_id và task_id
                 .findFirst();
 
         if (existingTask.isPresent()) {
@@ -44,8 +46,8 @@ public class TaskService {
         return false; // Không tìm thấy task để cập nhật
     }
 
-    // Xóa task theo ID
-    public boolean deleteTask(int id) {
-        return taskList.removeIf(task -> task.getId() == id);
+    // Xóa task theo user_id và task_id
+    public boolean deleteTask(int user_id, String task_id) {
+        return taskList.removeIf(task -> task.getUser_id() == user_id && task.getTask_id().equals(task_id)); // Fix: Lọc cả user_id và task_id
     }
 }
